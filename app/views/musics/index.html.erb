@@ -1,0 +1,22 @@
+<% if !user_signed_in? %>
+  <center><div class="jumbotron">
+    <h2>Добро пожаловать на сайт с обсуждениями о музыкальных альбомах!</h2>
+    <p><%= link_to "Зарегистрируйтесь для создания ветвей обсуждения о музыкальных альбомах", new_user_registration_path, class: "btn btn-primary btn-lg" %></p>
+    <p>Для просмотра ветвей обсуждения регистрация и вход в аккаунт необязательны.</p>
+    <p><u><%= link_to "Или войдите в аккаунт, если Вы уже зарегистрированы", new_user_session_path %></u></p>
+  </div></center>
+<% else %>
+<center style="margin-bottom:10px"><%= link_to "Создать ветвь обсуждения о музыкальном альбоме", new_music_path, class: "btn btn-primary btn-md" %></center>
+<% end %>
+<div class="row">
+  <h3>Все ветви обсуждений:</h3>
+  <% @musics.each do |music| %>
+    <div class="col-sm-6 col-md-3">
+      <div class="thumbnail">
+        <%= link_to (image_tag music.image.url(:medium), class: 'image'), music %>
+        <strong><%= music.title + " - " + music.artist %></strong>
+        Опубликовано: <i><%= User.find(music.user_id).email %></i>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,44 @@
+<center>
+<h2>Изменить данные</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label "Электронная почта" %><br />
+    <%= f.email_field :email, autofocus: true, class: "form-control text-center" %>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label "Пароль" %> <i>(оставьте поле пустым, если не хотите менять пароль)</i><br />
+    <%= f.password_field :password, autocomplete: "off", class: "form-control text-center" %>
+    <% if @minimum_password_length %>
+      <em>минимум <%= @minimum_password_length %> символов</em>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Подтверждение пароля" %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control text-center" %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Текущий пароль" %> <i>(обязательно заполните поле текущим паролем для применений изменений)</i><br />
+    <%= f.password_field :current_password, autocomplete: "off", class: "form-control text-center" %>
+  </div>
+  <br/>
+  <div class="actions">
+    <%= f.submit "Применить изменения", class: "btn btn-primary btn-md" %>
+  </div>
+<% end %>
+
+<h3>Удалить аккаунт</h3>
+
+<p> Не нравится аккаунт?<%= button_to "Удалить аккаунт", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger btn-sm" %></p>
+
+<%= link_to "Назад", :back %>
+</center>

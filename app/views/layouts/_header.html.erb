@@ -1,0 +1,35 @@
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <strong><%= link_to "Главная страница", root_path, class: "navbar-brand" %></strong>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <br>
+        <% if user_signed_in? %>
+          <i>Пользователь: <strong><%= current_user.email %></strong></i>
+          <%= link_to "Настройки аккаунта", edit_user_registration_path, class: "btn btn-warning btn-xs" %>
+          <%= link_to('Выйти', destroy_user_session_path, :method => :delete, class: "btn btn-danger btn-xs") %>
+        <% else %>
+          <%= link_to('Войти в аккаунт', new_user_session_path, class: "btn btn-default")  %>
+          <%= link_to('Региcтрация', new_user_registration_path, class: "btn btn-default") %>
+        <% end %>
+      </ul>
+      <%= form_tag search_musics_path, method: :get, class: "navbar-form navbar-center", role: "search" do %>
+        <p>
+          <%= text_field_tag :search, params[:search], class: "form-control", id: "inputPrimary" %>
+          <%= submit_tag "Искать", name: nil, class: "btn btn-default" %>
+        </p>
+
+      <% end %>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

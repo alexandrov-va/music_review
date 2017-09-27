@@ -1,0 +1,29 @@
+<center>
+<h2>Регистрация нового пользователя</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label "Электронная почта"%><br />
+    <%= f.email_field :email, autofocus: true, class: "form-control text-center" %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Пароль" %>
+    <% if @minimum_password_length %>
+    <em>(Минимум <%= @minimum_password_length %> символов)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "off", class: "form-control text-center" %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Подтверждение пароля" %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control text-center" %>
+  </div>
+  <br />
+  <div class="actions">
+    <%= f.submit "Зарегистрироваться", class: "btn btn-primary btn-lg" %>
+  </div>
+<% end %>
+</center>

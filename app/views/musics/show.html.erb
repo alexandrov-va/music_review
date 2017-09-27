@@ -1,0 +1,100 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="thumbnail">
+          <%= image_tag @music.image.url(:medium) %>
+          <div class="star-rating" data-score= <%= @avg_review %> >Средняя оценка: </div>
+          <p><i>Опубликовал: </i><%= @music.user.email %></p>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+              <tr>
+                <% if (user_signed_in? && @music.user_id == current_user.id) %>
+                  <td><%= link_to 'Изменить', edit_music_path(@music), class: "btn btn-warning btn-xs" %></td>
+                  <td></td>
+                  <td><%= link_to 'Удалить', @music, method: :delete, data: {confirm: "Вы уверены, что хотите удалить запись о #{@music.title}?"}, class: "btn btn-danger btn-xs" %></td>
+                <% end %>
+              </tr>
+              <tr>
+                <td>Название альбома:</td>
+                <td><strong><%= @music.title %></strong></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Описание:</td>
+                <td><strong><%= @music.description %></strong></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Год выпуска:</td>
+                <td><strong><%= @music.release_year %></strong></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Исполнитель:</td>
+                <td><strong><%= @music.artist %></strong></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-7 col-md-offset-1">
+        <% if @reviews.blank? %>
+          <div class="row">
+            <div class="col-md-10">
+              <% if user_signed_in? %>
+                <p><h3>Будьте первым, <b><%= current_user.email %></b>, кто напишет обзор!</h3></p>
+              <% else %>
+                <p><h3>Зарегистрируйтесь, чтобы написать обзор</h3></p>
+              <% end %>
+            </div>
+            <div class="col-md-3">
+              <br>
+              <br>
+              <% if user_signed_in? %>
+                <p><%= link_to "Написать обзор", new_music_review_path(@music), class: "btn btn-primary" %></p>
+              <% end %>
+            </div>
+          </div>
+        <% else %>
+          <div class="row">
+            <div class="col-md-9">
+              <h2><p>Обзоры:</p></h2>
+            </div>
+            <div class="col-md-3">
+              <br>
+              <%= link_to "Написать обзор", new_music_review_path(@music), class: "btn btn-primary" %>
+            </div>
+          </div>
+          <% @reviews.each do |review| %>
+            <div class="reviews row">
+              <div class="col-md-9">
+                <div class="star-rating" data-score= <%= review.rating %> ><i>Оценка: </i></div>
+                <p><strong><%= review.comment %></strong></p>
+                <p><i>Опубликовано:</i> <%= User.find(review.user_id).email %></p>
+              </div>
+              <div class="col-md-3">
+                <% if (user_signed_in? && review.user_id == current_user.id) %>
+                  <p><%= link_to "Удалить обзор", [review.music, review], method: :delete, data: {confirm: 'Вы уверены?'}, class: "btn btn-outline-danger btn-xs" %></p>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    $('.star-rating').raty({
+      path: '/assets/',
+      readOnly: true,
+      score: function() {
+            return $(this).attr('data-score');
+    }
+  });
+</script>

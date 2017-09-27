@@ -1,0 +1,40 @@
+<%= form_for(@music, :html => { :multipart => true }) do |f| %>
+  <% if @music.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@music.errors.count, "error") %> prohibited this music from being saved:</h2>
+
+      <ul>
+      <% @music.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<h4>
+  <div class="field">
+    <%= f.label "Название альбома" %><br>
+    <%= f.text_field :title, class: "form-control text-center", :data => {'text-align': 'center'} %>
+  </div>
+  <div class="field">
+    <%= f.label "Описание" %><br>
+    <%= f.text_area :description, class: "form-control text-center" %>
+  </div>
+  <div class="field">
+    <%= f.label "Год выпуска" %><br>
+    <%= f.text_field :release_year, class: "form-control text-center" %>
+  </div>
+  <div class="field">
+    <%= f.label "Исполнитель" %><br>
+    <%= f.text_field :artist, class: "form-control text-center" %>
+  </div>
+  <div class="field">
+    <%= f.label "Изображение альбома" %><br>
+    <%= f.file_field :image %>
+  </div>
+</h4>
+  <br/>
+  <div class="actions">
+    <%= f.submit "Применить", class: "btn btn-primary btn-lg" %>
+  </div>
+<% end %>
